@@ -66,4 +66,29 @@ public class challengeService {
             }
   return false;
             }
+
+
+
+  // delete 
+  // will pass the id ? sufficient ? or only description ?? hmm 
+  // delete whole challenge with a specific id
+  
+  public boolean todelete(Long id){
+  //    for(challenge i : getChallenges()){
+  //     if(i.getId().equals(id)){
+  //       getChallenges().remove(i);
+  //       return true;
+  //     }
+  //    }
+  //     return false;
+   
+  // }
+   return challenges.removeIf(challenge ->  challenge.getId().equals(id));
+  // lambda function 
+   // In the lambda, challenge is just the variable name for each element in the list as it is being checked.
+  }
+
 }
+
+
+
