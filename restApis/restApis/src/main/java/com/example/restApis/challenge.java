@@ -1,9 +1,16 @@
 package com.example.restApis;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
 public class challenge {
+   @Id
    private Long id;
+   @Column(name ="Status")
    private boolean status;
+   
    private String  description;
    public challenge(Long id, boolean status, String description) {
     this.id = id;

@@ -3,6 +3,7 @@ package com.example.restApis;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,16 +28,11 @@ public class challengeController {
     
 
 
-
-    public  challengeController(){
-        service.addChallenges(); 
-        
-    }
-    // The addChallenges() method is just adding initial values to the service.
-    // If you want your controller's 'challenges' list to have those values, you should retrieve them from the service.
-    // For example:
-    // this.challenges = service.getChallenges();
-    
+@Autowired
+public challengeController(challengeService challengeService) {
+    this.service = challengeService;
+}
+  
 
 
  @GetMapping("/getchallenges")

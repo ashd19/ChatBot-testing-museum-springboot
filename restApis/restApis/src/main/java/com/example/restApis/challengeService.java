@@ -41,11 +41,10 @@ public class challengeService {
      return challenges;
     
 }
-    public  void addChallenges(){
-        challenges.add(new challenge(1L, false, "Eat lunch"));
-         challenges.add(new challenge(2L, true, "gym"));
-          return;
-        }
+    public void addChallenge(challenge challengeToAdd) {
+         challenges.add(challengeToAdd);
+         
+    }
         public challenge getchallengeById( Long id){
 
             for( challenge c : getChallenges()){
