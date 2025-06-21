@@ -1,58 +1,63 @@
 package com.example.restApis;
 //service -> business logic 
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 @Service
 public class challengeService {
     
-    private  List<challenge> challenges= new ArrayList<>();
-    private  Long nextId = 1L; 
+    // private  List<challenge> challenges= new ArrayList<>();
+   
+    @Autowired
+    // no in memory list use db for all ops 
+    challengeRepository challengerepository;
+
     // auto assign , no null ,  
          public String postchallenge(@RequestBody challenge challengeToadd){
    // request body is used to get the data from the client
-   if(challengeToadd.getId()==null){
-     challengeToadd.setId(nextId++);
-   }
+  
+   // Always create a new challenge; let DB assign the ID
+    challengeToadd.setId(null);
+    challengerepository.save(challengeToadd);
+     return challengeToadd.getDescription() + " challenge added ";
     // if(challengeToadd.getId() == null || challengeToadd.getDescription() == null){
     //   return "Please provide a valid challenge with an ID and description.";
     // }
 
     
-    getChallenges().add(challengeToadd);
-    return challengeToadd.getDescription() + " challenge added ";
   } 
      
-  public void setChallenges(List<challenge> challenges) {
-        this.challenges = challenges;
-    }
-  public challengeService(List<challenge> challenges) {
-        this.challenges = challenges;
-    }
+ 
 
   public challengeService() {
     
 }
   public List<challenge> getChallenges()
 { 
-     return challenges;
+     return challengerepository.findAll();
     
 }
     public void addChallenge(challenge challengeToAdd) {
-         challenges.add(challengeToAdd);
-         
+      if(challengeToAdd != null){  
+      // challenges.add(challengeToAdd); 
+      //  using repository db 
+      challengerepository.save(challengeToAdd);
+    }
+    
     }
         public challenge getchallengeById( Long id){
 
-            for( challenge c : getChallenges()){
-           if(c.getId().equals(id)){
-            return c;
-        }
-    }
-    return null;
+    //         for( challenge c : getChallenges()){
+    //        if(c.getId().equals(id)){
+    //         return c;
+    //     }
+    // }
+    // return null;
+   return challengerepository.findById(id).orElse(null);
+
 }
  // id and what he wants to change
         public boolean updated( Long id,challenge updatedChallenge) {
@@ -82,11 +87,15 @@ public class challengeService {
   //     return false;
    
   // }
-   return challenges.removeIf(challenge ->  challenge.getId().equals(id));
+  if(challengerepository.existsById(id)){
+    challengerepository.deleteById(id);
+    return true;
   // lambda function 
    // In the lambda, challenge is just the variable name for each element in the list as it is being checked.
-  }
+  } 
+  return false;
 
+  }
 }
 
 
