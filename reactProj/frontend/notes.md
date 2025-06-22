@@ -1,0 +1,2 @@
+You use useState in React when you want to store and update values that change over time in your component—such as user input, toggles, or any data that should cause the UI to re-render when it changes.
+2.
