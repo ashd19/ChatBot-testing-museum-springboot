@@ -1,6 +1,4 @@
-
 import { Checkbox } from "@/components/ui/checkbox"
-import ChallengeList from "./components/ui/challengeList"
 import './index.css'
 import {
   Table,
@@ -63,7 +61,7 @@ function App() {
           Status
         </label>
         <input
-          type="password"
+          type="text"
           id="password"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
           placeholder='Done or Not done'
@@ -98,24 +96,29 @@ function App() {
     </h1>
  
 <Table>
-  
   <TableHeader>
     <TableRow>
-     
-      <TableHead>Status</TableHead>
-      <TableHead>Not Done </TableHead>
-      <TableHead className="text-left">Done </TableHead>
-       <TableHead>Delete </TableHead>
+      <TableHead>Description</TableHead>
+      <TableHead className="text-center">Not Done</TableHead>
+      <TableHead className="text-center">Done</TableHead>
+      <TableHead className="text-center">Delete</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
-    <TableRow>
-      
-      <TableCell></TableCell>
-      <TableCell></TableCell>
-      <TableCell className="text-left"></TableCell>
-      {/* <TableCell><Checkbox /></TableCell> */}
-    </TableRow>
+    {Challenge.map((item: any) => (
+      <TableRow key={item.id}>
+        <TableCell>{item.description}</TableCell>
+        <TableCell className="text-center">
+          {!item.status && <span>✔️</span>}
+        </TableCell>
+        <TableCell className="text-center">
+          {item.status && <span>✔️</span>}
+        </TableCell>
+        <TableCell className="text-center">
+          <Checkbox id={`delete-${item.id}`} />
+        </TableCell>
+      </TableRow>
+    ))}
   </TableBody>
 </Table>
 <div className='mb-20'></div>
